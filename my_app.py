@@ -15,12 +15,12 @@ fb = st.sidebar.number_input("Specified bending strength (MPa)", value = 30.6)
 
 # K Factors
 st.sidebar.subheader("K Factors")
-k_D = st.sidebar.number_input("Load Duration Factor, kD", value=1.0)
-k_H = st.sidebar.number_input("System Factor, kH", value=1.0)
-k_sb = st.sidebar.number_input("Service Condition Factor, ksb", value=1.0)
-k_T = st.sidebar.number_input("Treatment Factor, kT", value=1.0)
-k_x = st.sidebar.number_input("Curvature Factor, kx", value=1.0)
-k_L = st.sidebar.number_input("Lateral Stability Factor, kL", value=1.0)
+kD = st.sidebar.number_input("Load Duration Factor, kD", value=1.0)
+kH = st.sidebar.number_input("System Factor, kH", value=1.0)
+ksb = st.sidebar.number_input("Service Condition Factor, ksb", value=1.0)
+kT = st.sidebar.number_input("Treatment Factor, kT", value=1.0)
+kx = st.sidebar.number_input("Curvature Factor, kx", value=1.0)
+kL = st.sidebar.number_input("Lateral Stability Factor, kL", value=1.0)
 
 # Calculation of "resistance lines"
 results = sam.bending_capacity_vs_length(
@@ -31,12 +31,12 @@ results = sam.bending_capacity_vs_length(
     b,
     d,
     fb,
-    k_D,
-    k_H,
-    k_sb,
-    k_T,
-    k_x,
-    k_L,
+    kD,
+    kH,
+    ksb,
+    kT,
+    kx,
+    kL,
 )
 
 length_input = st.number_input(label="Length", min_value=min_length, max_value=max_length)
@@ -84,7 +84,7 @@ st.plotly_chart(fig)
 
 calc_expander_a = st.expander(label="Sample Calculation, Glulam Beam")
 with calc_expander_a:
-    for calc in example_latex_a:
+    for calc in example_latex:
         st.latex(
             calc
         )

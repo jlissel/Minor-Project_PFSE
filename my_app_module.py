@@ -67,6 +67,12 @@ def beam_mr_over_length_range(
         d=d,
         beam_tag=beam_tag,
         fb=fb,
+        kD=kD,
+        kH=kH,
+        ksb=ksb,
+        kT=kT,
+        kx=kx,
+        kL=kL,
     )
     y_values = []
     for x_value in x_values:
@@ -82,7 +88,7 @@ hc_renderer = handcalc(override='long')
 
 calc_bending_capacity = hc_renderer(glulam_beams.factored_bending_capacity)
 
-def calc_mr_at_given_length(L: float, b: float,d: float,f_b: float, k_D = 1.0, k_H = 1.0, k_sb = 1.0, k_T = 1.0, k_x = 1.0, k_L = 1.0, phi=0.9):
+def calc_mr_at_given_length(L: float, b: float,d: float,fb: float, kD = 1.0, kH = 1.0, ksb = 1.0, kT = 1.0, kx = 1.0, kL = 1.0, phi=0.9):
     """
     Doc strings
     """
@@ -90,13 +96,13 @@ def calc_mr_at_given_length(L: float, b: float,d: float,f_b: float, k_D = 1.0, k
         L,
         b,
         d,
-        f_b,
-        k_D,
-        k_H,
-        k_sb,
-        k_T,
-        k_x,
-        k_L,
+        fb,
+        kD,
+        kH,
+        ksb,
+        kT,
+        kx,
+        kL,
         phi
         )
     return [factored_latex], factored_load

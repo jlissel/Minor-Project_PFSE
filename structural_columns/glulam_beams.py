@@ -22,11 +22,11 @@ class GlulamBeam:
 
 
 ### Function
-def factored_bending_capacity(L: float, b: float,d: float,f_b: float, k_D = float, k_H = float, k_sb = float, k_T = float, k_x = float, k_L = float, phi=0.9) -> float:
-    F_b = f_b*k_D*k_H*k_sb*k_T
+def factored_bending_capacity(L: float, b: float,d: float,fb: float, kD = float, kH = float, ksb = float, kT = float, kx = float, kL = float, phi=0.9) -> float:
+    F_b = fb*kD*kH*ksb*kT
     k_zbg = (130/b)**(1/10)*(610/d)**(1/10)*(9100/L)**(1/10)
     S = b*d**2/6
-    Mr_1 = phi*F_b*S*k_x*k_zbg
-    Mr_2 = phi*F_b*S*k_x*k_L
+    Mr_1 = phi*F_b*S*kx*k_zbg
+    Mr_2 = phi*F_b*S*kx*kL
     M_r = min(Mr_1, Mr_2)
     return M_r
