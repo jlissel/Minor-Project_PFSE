@@ -1,26 +1,5 @@
 from dataclasses import dataclass
 
-@dataclass
-class Load:
-    """
-    A data type to represent any kind of scalar load as defined by the NBCC-19 separated
-    out by five components:
-    D - Dead
-    L - Live
-    S - Snow and rain
-    W - Wind
-    E - Earthquake
-
-    The type of load is not important. e.g the Load can represent a moment, line load,
-    point load or area load. All it keeps track of is the magnitude of each component.
-    """
-
-    D: float
-    L: float
-    S: float
-    W: float
-    E: float
-
 
 @dataclass
 class GlulamBeam:
