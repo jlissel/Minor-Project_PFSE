@@ -1,4 +1,4 @@
-from structural_columns import glulam_beams
+from structural_members import glulam_beams
 from handcalcs.decorator import handcalc
 
 CalcGlulamBeam = glulam_beams.GlulamBeam
@@ -7,11 +7,11 @@ calc_renderer = handcalc()
 CalcGlulamBeam.factored_bending_capacity = calc_renderer(glulam_beams.GlulamBeam.factored_bending_capacity)
 
 
-def bending_capacity_vs_length(
-    min_length: int, 
-    max_length: int,
+def bending_capacity_vs_depth(
+    min_depth: int, 
+    max_depth: int,
     interval: int,
-    length: int,
+    L: int,
     b: int,
     d: int,
     fb: int,
@@ -23,12 +23,11 @@ def bending_capacity_vs_length(
     kL: int,
     
 ) -> dict[str, tuple[list[float], list[float]]]:
-    x_values, y_values = beam_mr_over_length_range(
-        min_length,
-        max_length,
+    x_values, y_values = beam_mr_over_depth_range(
+        min_depth,
+        max_depth,
         interval,
-        "Glulam Beam",
-        length,
+        L,
         b,
         d,
         fb,
@@ -43,12 +42,11 @@ def bending_capacity_vs_length(
         "Glulam Beam": (x_values, y_values),
     }
 
-def beam_mr_over_length_range(
-        min_length: int, 
-        max_length: int,
+def beam_mr_over_depth_range(
+        min_depth: int, 
+        max_depth: int,
         interval: int,
-        beam_tag: str,
-        length: float,
+        L: float,
         b: float, 
         d: float,
         fb=30.6,
@@ -60,12 +58,11 @@ def beam_mr_over_length_range(
         kL=1.0,
 
 ) -> tuple[list[float], list[float], str]:
-    x_values = list(range(min_length, max_length, interval))
+    x_values = list(range(min_depth, max_depth, interval))
     test_beam = CalcGlulamBeam(
-        length=min_length,
+        L=L,
         b=b,
-        d=d,
-        beam_tag=beam_tag,
+        d=min_depth,
         fb=fb,
         kD=kD,
         kH=kH,
@@ -76,22 +73,19 @@ def beam_mr_over_length_range(
     )
     y_values = []
     for x_value in x_values:
-        test_beam.length = x_value
+        test_beam.d = x_value
         mr = test_beam.factored_bending_capacity()
         y_values.append(mr)
 
     return x_values, y_values
 
 
-# Example calcs with handcalcs
 hc_renderer = handcalc(override='long')
 
 calc_bending_capacity = hc_renderer(glulam_beams.factored_bending_capacity)
 
-def calc_mr_at_given_length(L: float, b: float,d: float,fb: float, kD = 1.0, kH = 1.0, ksb = 1.0, kT = 1.0, kx = 1.0, kL = 1.0, phi=0.9):
-    """
-    Doc strings
-    """
+def calc_mr_at_given_depth(L: float, b: float,d: float,fb: float, kD = 1.0, kH = 1.0, ksb = 1.0, kT = 1.0, kx = 1.0, kL = 1.0, phi=0.9):
+
     factored_latex, factored_load = calc_bending_capacity(
         L,
         b,
